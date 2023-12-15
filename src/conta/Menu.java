@@ -2,29 +2,46 @@ package conta;
 import conta.util.*;
 import java.util.Scanner;
 import conta.model.Conta;
+import conta.model.ContaCorrente;
+import conta.model.ContaPoupanca;
 
 public class Menu {
 	public static void main(String[] args) {
+		int opcao;
+		Scanner scan = new Scanner(System.in);	
+		
+		
+		//Testando as contas c/c 
+		ContaCorrente cc1 = new ContaCorrente(1, 123, 1, "José da Silva", 0.0f, 1000.0f);
+		cc1.visualizar();
+		cc1.sacar(12000.0f);
+		cc1.visualizar();
+		cc1.depositar(5000.0f);
+		cc1.visualizar();	
+		
+		// Testando as contas c/p
+		
+		ContaPoupanca cp1 = new ContaPoupanca(2, 123, 2, "Maria dos Santos", 100000.0f, 15);
+		cp1.visualizar();
+        cp1.sacar(1000.0f);
+		cp1.visualizar();
+		cp1.depositar(5000.0f);
+		cp1.visualizar();
+		
 		//Testando a classe
 		Conta c1 = new Conta(1, 123, 1, "Adriano Vendramini", 10000.0f);
 		c1.visualizar();
 		c1.sacar(12000.0f);
 		c1.visualizar();
 		c1.depositar(5000.0f);
-		c1.visualizar();
-		
-		
-		
-		Scanner scan = new Scanner(System.in);
-
-		int opcao;
+		c1.visualizar();		
 		
 		while (true) {
 			System.out.println(Cores.TEXT_PURPLE_BOLD_BRIGHT + Cores.ANSI_BLACK_BACKGROUND	);
 			
 			System.out.println("*****************************************************");
 			System.out.println("                                                     ");
-			System.out.println("                BANCO DO ADRIANO                     ");
+			System.out.println("              ⚒ BANCO DO ADRIANO ☭                   ");
 			System.out.println("                                                     ");
 			System.out.println("*****************************************************");
 			System.out.println("                                                     ");
@@ -45,7 +62,7 @@ public class Menu {
 			opcao = scan.nextInt();
 
 			if (opcao == 9) {
-				System.out.println(Cores.TEXT_WHITE_BOLD+"\nBanco do Adriano - O banco mais geracional do Brasil!");
+				System.out.println(Cores.TEXT_WHITE_BOLD+"\nBanco do Adriano - O banco mais geracional do Brasil! ☭");
 				sobre();
                  scan.close();
 				System.exit(0);
