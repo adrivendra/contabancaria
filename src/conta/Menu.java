@@ -1,6 +1,9 @@
 package conta;
 
 import conta.util.*;
+
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import conta.controller.ContaController;
@@ -9,7 +12,7 @@ import conta.model.ContaPoupanca;
 
 public class Menu {
 	public static void main(String[] args) {
-
+		// *******************************************************************************************************
 		ContaController contas = new ContaController();
 
 		Scanner scan = new Scanner(System.in);
@@ -17,9 +20,10 @@ public class Menu {
 		int opcao, numero, agencia, tipo, aniversario, numeroDestino;
 		String titular;
 		float saldo, limite, valor;
-
+		// *******************************************************************************************************
+		// CONTAS TESTES
 		System.out.println("\n Criar Contas");
-
+		System.out.println("Criando Contas Teste...");
 		ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 123, 1, "João da Silva", 1000f, 100.0f);
 		contas.cadastrar(cc1);
 
@@ -31,6 +35,8 @@ public class Menu {
 
 		ContaPoupanca cp2 = new ContaPoupanca(contas.gerarNumero(), 126, 2, "Juliana Ramos", 8000f, 15);
 		contas.cadastrar(cp2);
+		// *******************************************************************************************************
+		// MENU
 
 		while (true) {
 			System.out.println(Cores.TEXT_PURPLE_BOLD_BRIGHT + Cores.ANSI_BLACK_BACKGROUND);
@@ -54,9 +60,15 @@ public class Menu {
 			System.out.println("*****************************************************");
 			System.out.println("Entre com a opção desejada:                          ");
 			System.out.println("                                                     " + Cores.TEXT_RESET);
-
-			opcao = scan.nextInt();
-
+			// *******************************************************************************************************
+			// FUNCIONALIDADES DO MENU
+			try {
+				opcao = scan.nextInt();
+			} catch (InputMismatchException e) {
+				System.out.println("\nDigite valores inteiros!");
+				scan.nextLine();
+				opcao = 0;
+			}
 			if (opcao == 9) {
 				System.out.println(Cores.TEXT_WHITE_BOLD + "\nBanco do Adriano - O banco mais geracional do Brasil! ☭");
 				sobre();
@@ -95,11 +107,12 @@ public class Menu {
 							new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
 				}
 				}
-
+				keyPress();
 				break;
 			case 2:
 				System.out.println("Listar todas as Contas\n\n");
 				contas.listarTodas();
+				keyPress();
 				break;
 			case 3:
 				System.out.println("Consultar dados da Conta - por número\n\n");
@@ -108,7 +121,7 @@ public class Menu {
 				numero = scan.nextInt();
 
 				contas.procurarPorNumero(numero);
-
+				keyPress();
 				break;
 			case 4:
 				System.out.println("Atualizar dados da Conta\n\n");
@@ -152,7 +165,7 @@ public class Menu {
 				} else {
 					System.out.println("A conta não foi encontrada!");
 				}
-
+				keyPress();
 				break;
 			case 5:
 				System.out.println("Apagar a Conta\n\n");
@@ -160,6 +173,7 @@ public class Menu {
 				numero = scan.nextInt();
 
 				contas.deletar(numero);
+				keyPress();
 				break;
 			case 6:
 				System.out.println("Saque\n\n");
@@ -173,7 +187,7 @@ public class Menu {
 				} while (valor <= 0);
 
 				contas.sacar(numero, valor);
-
+				keyPress();
 				break;
 			case 7:
 				System.out.println("Depósito\n\n");
@@ -187,7 +201,7 @@ public class Menu {
 				} while (valor <= 0);
 
 				contas.depositar(numero, valor);
-
+				keyPress();
 				break;
 			case 8:
 				System.out.println("Transferência entre Contas\n\n" + Cores.TEXT_RESET);
@@ -203,20 +217,36 @@ public class Menu {
 				} while (valor <= 0);
 
 				contas.transferir(numero, numeroDestino, valor);
-
+				keyPress();
 				break;
 			default:
 				System.out.println(Cores.TEXT_RED_BOLD + "\nOpção Inválida!\n" + Cores.TEXT_RESET);
+				keyPress();
 				break;
 			}
 		}
 	}
 
+// *******************************************************************************************************
 	public static void sobre() {
 		System.out.println("\n*********************************************************");
 		System.out.println("Projeto Desenvolvido por: ");
 		System.out.println("Adriano Vendramini - adrianovendramini@hotmail.com");
 		System.out.println("github.com/adrivendra/contabancaria");
 		System.out.println("*********************************************************");
+	}
+
+	public static void keyPress() {
+
+		try {
+
+			System.out.println(Cores.TEXT_RESET + "\n\nPressione Enter para Continuar...");
+			System.in.read();
+
+		} catch (IOException e) {
+
+			System.out.println("Você pressionou uma tecla diferente de enter!");
+
+		}
 	}
 }
