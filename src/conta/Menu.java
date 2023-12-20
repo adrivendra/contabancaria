@@ -14,9 +14,9 @@ public class Menu {
 
 		Scanner scan = new Scanner(System.in);
 
-		int opcao, numero, agencia, tipo, aniversario;
+		int opcao, numero, agencia, tipo, aniversario, numeroDestino;
 		String titular;
-		float saldo, limite;
+		float saldo, limite, valor;
 
 		System.out.println("\n Criar Contas");
 
@@ -29,7 +29,7 @@ public class Menu {
 		ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 125, 2, "Mariana dos Santos", 4000f, 12);
 		contas.cadastrar(cp1);
 
-		ContaPoupanca cp2 = new ContaPoupanca(contas.gerarNumero(), 125, 2, "Juliana Ramos", 8000f, 15);
+		ContaPoupanca cp2 = new ContaPoupanca(contas.gerarNumero(), 126, 2, "Juliana Ramos", 8000f, 15);
 		contas.cadastrar(cp2);
 
 		while (true) {
@@ -158,19 +158,51 @@ public class Menu {
 				System.out.println("Apagar a Conta\n\n");
 				System.out.println("Digite o número da conta: ");
 				numero = scan.nextInt();
-				
+
 				contas.deletar(numero);
 				break;
 			case 6:
 				System.out.println("Saque\n\n");
 
+				System.out.println("Digite o número da conta: ");
+				numero = scan.nextInt();
+
+				do {
+					System.out.println("Digite o Valor do Saque (R$): ");
+					valor = scan.nextFloat();
+				} while (valor <= 0);
+
+				contas.sacar(numero, valor);
+
 				break;
 			case 7:
 				System.out.println("Depósito\n\n");
 
+				System.out.println("Digite o número da conta: ");
+				numero = scan.nextInt();
+
+				do {
+					System.out.println("Digite o Valor do Depósito (R$): ");
+					valor = scan.nextFloat();
+				} while (valor <= 0);
+
+				contas.depositar(numero, valor);
+
 				break;
 			case 8:
 				System.out.println("Transferência entre Contas\n\n" + Cores.TEXT_RESET);
+
+				System.out.println("Digite o número da conta de Origem: ");
+				numero = scan.nextInt();
+				System.out.println("Digite o número da conta de Destino: ");
+				numeroDestino = scan.nextInt();
+
+				do {
+					System.out.println("Digite o Valor da Transferência: ");
+					valor = scan.nextFloat();
+				} while (valor <= 0);
+
+				contas.transferir(numero, numeroDestino, valor);
 
 				break;
 			default:
